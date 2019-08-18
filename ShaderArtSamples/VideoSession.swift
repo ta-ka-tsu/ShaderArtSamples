@@ -59,7 +59,7 @@ class VideoSession : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AVC
         self.session.beginConfiguration()
         
         // Input
-        self.videoDevice = AVCaptureDevice.devices(for: .video).first { $0.position == .back }!//AVCaptureDevice.default(for: .video)
+        self.videoDevice = AVCaptureDevice.default(for: .video)
         let videoInput = try! AVCaptureDeviceInput(device: self.videoDevice)
         self.session.addInput(videoInput)
 
