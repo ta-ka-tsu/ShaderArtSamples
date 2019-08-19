@@ -10,19 +10,15 @@
 
 using namespace metal;
 
-fragment float4 Sample1_1_AllRed(float4 pixPos [[position]])
-{
-    return float4(1.0, 0.0, 0.0, 1.0);
-}
 
-fragment float4 Sample1_2(float4 pixPos [[position]],
-                         constant float2 &res[[buffer(0)]])
+fragment float4 Sample2_1(float4 pixPos [[position]],
+                          constant float2& res[[buffer(0)]])
 {
-    float2 uv = pixPos.xy/min(res.x, res.y);
+    float2 uv = pixPos.xy/res;
     return float4(uv, 0.0, 1.0);
 }
 
-fragment float4 Sample1_3(float4 pixPos [[position]],
+fragment float4 Sample1_6(float4 pixPos [[position]],
                          constant float2 &res[[buffer(0)]],
                          constant float &time[[buffer(1)]])
 {
@@ -31,7 +27,7 @@ fragment float4 Sample1_3(float4 pixPos [[position]],
     return float4(col, 1.0);
 }
 
-fragment float4 Sample1_4(float4 pixPos [[position]],
+fragment float4 Sample1_7(float4 pixPos [[position]],
                          constant float2 &res[[buffer(0)]],
                          constant float &vol[[buffer(2)]])
 {
@@ -39,7 +35,7 @@ fragment float4 Sample1_4(float4 pixPos [[position]],
     return float4(step(length(uv - 0.5), 0.5*vol), 0.0, 0.0, 1.0);
 }
 
-fragment float4 Sample1_5_Accel(float4 pixPos [[position]],
+fragment float4 Sample1_8_Accel(float4 pixPos [[position]],
                                 constant float2& res[[buffer(0)]],
                                 constant float3& accel[[buffer(3)]])
 {

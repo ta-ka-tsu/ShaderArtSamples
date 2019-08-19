@@ -21,6 +21,7 @@
 		2B77819C23066E3B0081B063 /* RainyCamera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B77819B23066E3B0081B063 /* RainyCamera.metal */; };
 		2B77819E230681B50081B063 /* RayMarching.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B77819D230681B50081B063 /* RayMarching.metal */; };
 		2BB3A22622DAD3540081929C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Shader.metal */; };
+		2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Sample1.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		2B77819B23066E3B0081B063 /* RainyCamera.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RainyCamera.metal; sourceTree = "<group>"; };
 		2B77819D230681B50081B063 /* RayMarching.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RayMarching.metal; sourceTree = "<group>"; };
 		2BB3A22522DAD3540081929C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
+		2BC0326C2309D1B0002482ED /* Sample1.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sample1.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				2BB3A22522DAD3540081929C /* Shader.metal */,
 				2B77819B23066E3B0081B063 /* RainyCamera.metal */,
 				2B77819D230681B50081B063 /* RayMarching.metal */,
+				2BC0326C2309D1B0002482ED /* Sample1.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				2B0BD0112301311600F4CF6A /* VertexShader.metal in Sources */,
 				2BB3A22622DAD3540081929C /* Shader.metal in Sources */,
 				2B0BD00C22F704FF00F4CF6A /* VideoSession.swift in Sources */,
+				2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */,
 				2B77819E230681B50081B063 /* RayMarching.metal in Sources */,
 				2B0BD00022F5C47C00F4CF6A /* Library.swift in Sources */,
 				2B77819C23066E3B0081B063 /* RainyCamera.metal in Sources */,
