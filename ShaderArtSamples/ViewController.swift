@@ -20,9 +20,6 @@ class ViewController: UIViewController {
     var commandQueue : MTLCommandQueue! = nil
     var pipelineState : MTLRenderPipelineState! = nil
 
-    // Shader Library
-    var defaultLibrary : MTLLibrary! = nil
-    
     // Acceleration Sensor
     let motionManager = CMMotionManager()
     
@@ -51,7 +48,6 @@ class ViewController: UIViewController {
         metalView.device = device
         metalView.delegate = self
 
-        defaultLibrary = device.makeDefaultLibrary()
         commandQueue = device.makeCommandQueue()
         
         // Create Pipiline
