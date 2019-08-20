@@ -14,13 +14,65 @@ using namespace metal;
 fragment float4 Sample2_1(float4 pixPos [[position]],
                           constant float2& res[[buffer(0)]])
 {
-    float2 uv = pixPos.xy/res;
-    return float4(uv, 0.0, 1.0);
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    return step(length(uv), 1.0);
 }
 
-fragment float4 Sample1_6(float4 pixPos [[position]],
-                         constant float2 &res[[buffer(0)]],
-                         constant float &time[[buffer(1)]])
+// カージオイド
+fragment float4 Sample2_2(float4 pixPos [[position]],
+                          constant float2 &res[[buffer(0)]],
+                          constant float &time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float theta = atan2(uv.y, uv.x);
+    float threshold = 0.5 * sin(theta) + 0.5;
+    return step(length(uv), threshold);
+}
+
+// 花？
+fragment float4 Sample2_3(float4 pixPos [[position]],
+                          constant float2 &res[[buffer(0)]],
+                          constant float &time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float theta = atan2(uv.y, uv.x);
+    float threshold = 0.5*sin(5 * theta) + 0.5;
+    return step(length(uv), threshold);
+}
+
+// 花？
+fragment float4 Sample2_4(float4 pixPos [[position]],
+                          constant float2 &res[[buffer(0)]],
+                          constant float &time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float theta = atan2(uv.y, uv.x);
+    float threshold = 0.5*sin(5 * theta) + 0.5;
+    return step(length(uv), threshold);
+}
+
+fragment float4 Sample2_5(float4 pixPos [[position]],
+                          constant float2 &res[[buffer(0)]],
+                          constant float &time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float theta = atan2(uv.y, uv.x);
+    float threshold = min(0.6*abs(sin(2.5*theta))+0.4, 0.3 * abs(cos(2.5*theta))+0.9);
+    return step(length(uv), threshold);
+}
+
+fragment float4 Sample2_6(float4 pixPos [[position]],
+                          constant float2 &res[[buffer(0)]],
+                          constant float &time[[buffer(1)]])
 {
     float2 uv = pixPos.xy/min(res.x, res.y);
     float3 col = step(0.5 * sin(time) + 0.5, length(uv));
