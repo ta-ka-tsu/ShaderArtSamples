@@ -83,6 +83,11 @@ class ViewController: UIViewController {
         super.viewDidDisappear(animated)
         VideoSession.shared.endSession()
     }
+
+    @IBAction func close(_ sender: Any) {
+        VideoSession.shared.endSession()
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension ViewController : SessionDelegate {
