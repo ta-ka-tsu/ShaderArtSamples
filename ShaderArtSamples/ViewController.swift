@@ -14,6 +14,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var metalView: MTKView!
     
+    var gpu: GPUDevice!
     var fragmentShader: MTLFunction!
     
     // Pipeline
@@ -44,11 +45,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Prepare for Metal
-        let device = GPUDevice.shared.device
-        metalView.device = device
+        gpu = GPUDevice.shared
+        metalView.device = gpu.device
         metalView.delegate = self
 
-        commandQueue = device.makeCommandQueue()
+        commandQueue = gpu.device.makeCommandQueue()
         
         // Create Pipiline
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
@@ -57,7 +58,7 @@ class ViewController: UIViewController {
         pipelineStateDescriptor.fragmentFunction = fragmentShader
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
-        pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
+        pipelineState = try! gpu.device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
         
         // Setup Video
         VideoSession.shared.videoOrientation = .landscapeRight
@@ -96,8 +97,7 @@ extension ViewController : SessionDelegate {
 
 extension ViewController : MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        let resolution = [Float(size.width), Float(size.height)]
-        memcpy(GPUDevice.shared.resolutionBuffer.contents(), resolution, MemoryLayout<Float>.size * 2)
+        gpu.updateResolution(width: Float(size.width), height: Float(size.height))
     }
     
     func draw(in view: MTKView) {
@@ -111,17 +111,16 @@ extension ViewController : MTKViewDelegate {
                 semaphore.signal()
                 return
         }
-        let device = GPUDevice.shared
-        device.updateTime(Float(Date().timeIntervalSince(startDate)))
-        device.updateVolume(volumeLevel)
-        device.updateAcceleration(acceleration)
+        gpu.updateTime(Float(Date().timeIntervalSince(startDate)))
+        gpu.updateVolume(volumeLevel)
+        gpu.updateAcceleration(acceleration)
 
         renderEncoder.setRenderPipelineState(pipelineState)
 
-        renderEncoder.setFragmentBuffer(device.resolutionBuffer, offset: 0, index: 0)
-        renderEncoder.setFragmentBuffer(device.timeBuffer, offset: 0, index: 1)
-        renderEncoder.setFragmentBuffer(device.volumeBuffer, offset: 0, index: 2)
-        renderEncoder.setFragmentBuffer(device.accelerationBuffer, offset: 0, index: 3)
+        renderEncoder.setFragmentBuffer(gpu.resolutionBuffer, offset: 0, index: 0)
+        renderEncoder.setFragmentBuffer(gpu.timeBuffer, offset: 0, index: 1)
+        renderEncoder.setFragmentBuffer(gpu.volumeBuffer, offset: 0, index: 2)
+        renderEncoder.setFragmentBuffer(gpu.accelerationBuffer, offset: 0, index: 3)
 
         renderEncoder.setFragmentTexture(texture, index: 0)
         
