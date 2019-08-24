@@ -10,6 +10,21 @@
 
 using namespace metal;
 
+static float N11(float v) {
+    return fract(sin(v)*43758.5453123);
+}
+
+static float N21(float2 p) {
+    return N11(dot(p, float2(12.9898, 78.233)));
+}
+
+static float3 hsv2rgb(float h, float s, float v) {
+    float3 a = fract(h + float3(0.0, 2.0, 1.0)/3.0)*6.0-3.0;
+    a = clamp(abs(a) - 1.0, 0.0, 1.0) - 1.0;
+    a = a*s + 1.0;
+    return a*v;
+//    return ((clamp(abs(fract(h+float3(0,2,1)/3.0)*6.0-3.0)-1.0,0.0,1.0)-1.0)*s+1.0)*v;
+}
 
 fragment float4 Sample2_1(float4 pixPos [[position]],
                           constant float2& res[[buffer(0)]])
@@ -19,72 +34,280 @@ fragment float4 Sample2_1(float4 pixPos [[position]],
     return step(length(uv), 1.0);
 }
 
-// カージオイド
+// ダイヤ
+fragment float4 Sample2_1_2(float4 pixPos [[position]],
+                          constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float manhattanDist = abs(uv.x) + abs(uv.y);
+    return step(manhattanDist, 1.0);
+}
+
+// 四角
+fragment float4 Sample2_1_3(float4 pixPos [[position]],
+                            constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float chebyshevDist = max(abs(uv.x), abs(uv.y));
+    return step(chebyshevDist, 1.0);
+}
+
+// 花
 fragment float4 Sample2_2(float4 pixPos [[position]],
-                          constant float2 &res[[buffer(0)]],
-                          constant float &time[[buffer(1)]])
+                          constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
     float theta = atan2(uv.y, uv.x);
-    float threshold = 0.5 * sin(theta) + 0.5;
+    float threshold = 0.5*sin(5 * theta) + 0.5;
     return step(length(uv), threshold);
 }
 
-// 花？
+// 星
 fragment float4 Sample2_3(float4 pixPos [[position]],
-                          constant float2 &res[[buffer(0)]],
-                          constant float &time[[buffer(1)]])
+                          constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
     float theta = atan2(uv.y, uv.x);
-    float threshold = 0.5*sin(5 * theta) + 0.5;
+    float threshold = 0.2*sin(5 * theta) + 0.8;
     return step(length(uv), threshold);
 }
 
-// 花？
+// 回転する星
 fragment float4 Sample2_4(float4 pixPos [[position]],
-                          constant float2 &res[[buffer(0)]],
-                          constant float &time[[buffer(1)]])
+                          constant float2& res[[buffer(0)]],
+                          constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    float theta = atan2(uv.y, uv.x);
-    float threshold = 0.5*sin(5 * theta) + 0.5;
+    float theta = atan2(uv.y, uv.x) - time;
+    float threshold = 0.2*sin(5 * theta) + 0.8;
     return step(length(uv), threshold);
 }
 
+// 複製した回転する星
 fragment float4 Sample2_5(float4 pixPos [[position]],
-                          constant float2 &res[[buffer(0)]],
-                          constant float &time[[buffer(1)]])
+                          constant float2& res[[buffer(0)]],
+                          constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    float theta = atan2(uv.y, uv.x);
-    float threshold = min(0.6*abs(sin(2.5*theta))+0.4, 0.3 * abs(cos(2.5*theta))+0.9);
+    uv = fract(2.0 * uv) * 2.0 - 1.0;
+
+    float theta = atan2(uv.y, uv.x) - time;
+    float threshold = 0.2*sin(5 * theta) + 0.8;
     return step(length(uv), threshold);
 }
 
+// もっと複製した回転する星
 fragment float4 Sample2_6(float4 pixPos [[position]],
-                          constant float2 &res[[buffer(0)]],
-                          constant float &time[[buffer(1)]])
+                          constant float2& res[[buffer(0)]],
+                          constant float& time[[buffer(1)]])
 {
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    float3 col = step(0.5 * sin(time) + 0.5, length(uv));
-    return float4(col, 1.0);
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv = fract(5.0 * uv) * 2.0 - 1.0;
+    
+    float theta = atan2(uv.y, uv.x) - time;
+    float threshold = 0.2*sin(5 * theta) + 0.8;
+    return step(length(uv), threshold);
 }
 
-fragment float4 Sample1_7(float4 pixPos [[position]],
-                         constant float2 &res[[buffer(0)]],
-                         constant float &vol[[buffer(2)]])
+// 複製した円
+fragment float4 Sample2_7(float4 pixPos [[position]],
+                          constant float2& res[[buffer(0)]])
 {
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    return float4(step(length(uv - 0.5), 0.5*vol), 0.0, 0.0, 1.0);
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv = fract(2.0 * uv) * 2.0 - 1.0;
+
+    return step(length(uv), 1.0);
+}
+
+// グリッド毎にサイズを変えた円
+fragment float4 Sample2_8(float4 pixPos [[position]],
+                          constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float2 id = floor(2.0 * uv);
+    uv = fract(2.0 * uv) * 2.0 - 1.0;
+    
+    float threshold = exp(-length(id));
+    return step(length(uv), threshold);
+}
+
+// グリッド毎にサイズを変えた円(中心版)
+fragment float4 Sample2_9(float4 pixPos [[position]],
+                          constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv = 2.0 * uv + 0.5;
+    float2 id = floor(uv);
+    uv = fract(uv) * 2.0 - 1.0;
+    
+    float threshold = exp(-length(id));
+    return step(length(uv), threshold);
+}
+
+float2 rot(float2 p, float theta) {
+    float c = cos(theta);
+    float s = sin(theta);
+    float2x2 mat(c, -s, s, c);
+    return mat * p;
+}
+
+// グリッド毎にサイズを変えた円(中心版)+アニメーション
+fragment float4 Sample2_10(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv = rot(uv, time);
+    
+    uv = 2.0 * uv + 0.5;
+    float2 id = floor(uv);
+    uv = fract(uv) * 2.0 - 1.0;
+    
+    float threshold = exp(-(0.5*sin(2.0*time)+0.5)*length(id));
+    return step(length(uv), threshold);
+}
+
+fragment float4 Noise1(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    return fract(100000*sin(uv.x));
+}
+
+fragment float4 Noise2(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    return fract(sin(dot(uv, float2(12.9898,78.233)))*43758.5453123);
+}
+
+fragment float4 Noise3(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    
+    return N21(id);
+}
+
+
+fragment float4 Noise4(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]],
+                       constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    uv = fract(4*uv)*2.0 - 1.0;
+    
+    float r = fract(sin(dot(id, float2(12.9898,78.233)))*43758.5453123);
+
+    return step(length(uv), 0.5 + 0.5*sin(3*time + 5*r));
+}
+
+// 色付きブロックノイズ(汚い)
+fragment float4 Color1(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]],
+                       constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    
+    float r = N21(id);
+    float g = N21(id + float2(123.34, 32.34));
+    float b = N21(id + float2(23.0, 342.0));
+    return float4(r, g, b, 1.0);
+}
+
+// 色付きブロックノイズ(ビビッド)
+fragment float4 Color2(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    
+    float h = N21(id);
+    float3 rgb = hsv2rgb(h, 1.0, 1.0);
+    return float4(rgb, 1.0);
+}
+
+// 色付きブロックノイズ(おとなしめ)
+fragment float4 Color3(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    
+    float h = N21(id);
+    float3 rgb = hsv2rgb(h, 0.7, 1.0);
+    return float4(rgb, 1.0);
+}
+
+// 色付き円アニメーション
+fragment float4 Color4(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]],
+                       constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    
+    float h = N21(id);
+    float3 rgb = hsv2rgb(fract(h + 0.2*time), 0.7, 1.0);
+    return float4(rgb, 1.0);
+}
+
+// 色付き円アニメーション
+fragment float4 Color5(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]],
+                       constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv *= -1.0;
+    
+    float2 id = floor(4*uv);
+    
+    float h = N21(id);
+    float3 rgb = hsv2rgb(fract(h + 0.2*time), 0.7, 1.0);
+    
+    uv = fract(4*uv)*2.0 - 1.0;
+    return float4(rgb, 1.0) * step(length(uv), 0.5 + 0.5*sin(3*time + 5*h));
 }
 
 fragment float4 Sample1_8_Accel(float4 pixPos [[position]],
@@ -102,14 +325,44 @@ fragment float4 Sample1_8_Accel(float4 pixPos [[position]],
     return float4(col, 1.0);
 }
 
+fragment float4 BlockNoiseCamera(float4 pixPos [[position]],
+                                 constant float2& res[[buffer(0)]],
+                                 constant float& time[[buffer(1)]],
+                                 texture2d<float, access::sample> texture[[texture(0)]])
+{
+    float4 col = 0;
+
+    float2 uv = pixPos.xy/min(res.x, res.y);
+    uv.y *= -1.0;
+
+    constexpr float blocksize = 20.0;
+    constexpr float distortion = 0.2;
+    
+    uv *= blocksize;
+    float2 id = floor(uv);
+    
+    float noise = 2.0*(N21(id) - 0.5);
+
+    float outputmask = step(abs(noise), 0.2);
+    noise *= outputmask;
+    
+    constexpr sampler s(address::repeat, filter::linear);
+    float2 texUV = pixPos.xy/res;
+    
+    col = float4(texture.sample(s, texUV - distortion * noise));
+    
+    return col;
+}
+
 fragment float4 Camera(float4 pixPos [[position]],
-                      constant float2 &res[[buffer(0)]],
+                      constant float2& res[[buffer(0)]],
                       texture2d<float, access::sample> texture[[texture(0)]])
 {
     float4 col = 0;
     constexpr sampler s(address::clamp_to_edge, filter::linear);
     float2 uv = pixPos.xy/res;
     col = float4(texture.sample(s, uv));
+    col.rgb = dot(col.rgb, float3(0.2126, 0.7152, 0.0722));
 
     return col;
 }
