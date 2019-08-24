@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         commandQueue = gpu.device.makeCommandQueue()
         
         let textureLoader = MTKTextureLoader(device:gpu.device)
-        self.imageTexture = try! textureLoader.newTexture(name: "icon", scaleFactor: 0.0, bundle: nil, options: nil)
+        self.imageTexture = try! textureLoader.newTexture(name: "icon", scaleFactor: 1.0, bundle: nil, options: [.SRGB: false])
         
         // Create Pipiline
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
