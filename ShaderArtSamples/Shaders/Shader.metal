@@ -193,7 +193,7 @@ fragment float4 Noise1(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     return fract(100000*sin(uv.x));
 }
@@ -202,7 +202,7 @@ fragment float4 Noise2(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     return fract(sin(dot(uv, float2(12.9898,78.233)))*43758.5453123);
 }
@@ -211,7 +211,7 @@ fragment float4 Noise3(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     
@@ -224,7 +224,7 @@ fragment float4 Noise4(float4 pixPos [[position]],
                        constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     uv = fract(4*uv)*2.0 - 1.0;
@@ -240,7 +240,7 @@ fragment float4 Color1(float4 pixPos [[position]],
                        constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     
@@ -255,7 +255,7 @@ fragment float4 Color2(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     
@@ -269,7 +269,7 @@ fragment float4 Color3(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     
@@ -284,7 +284,7 @@ fragment float4 Color4(float4 pixPos [[position]],
                        constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     
@@ -299,7 +299,7 @@ fragment float4 Color5(float4 pixPos [[position]],
                        constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv *= -1.0;
+    uv.y *= -1.0;
     
     float2 id = floor(4*uv);
     
@@ -308,6 +308,19 @@ fragment float4 Color5(float4 pixPos [[position]],
     
     uv = fract(4*uv)*2.0 - 1.0;
     return float4(rgb, 1.0) * step(length(uv), 0.5 + 0.5*sin(3*time + 5*h));
+}
+
+// 色付き円アニメーション
+fragment float4 Texture1(float4 pixPos [[position]],
+                         constant float2& res[[buffer(0)]],
+                         constant float& time[[buffer(1)]],
+                         texture2d<float, access::sample> image[[texture(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+
+    constexpr sampler s(address::clamp_to_edge, filter::linear);
+    return image.sample(s, uv);
 }
 
 fragment float4 Sample1_8_Accel(float4 pixPos [[position]],
