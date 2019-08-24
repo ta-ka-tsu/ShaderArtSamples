@@ -24,7 +24,6 @@ class GPUDevice {
     var timeBuffer : MTLBuffer! = nil
     var volumeBuffer : MTLBuffer! = nil
     var accelerationBuffer : MTLBuffer! = nil
-    var videoTexture : MTLTexture! = nil
     
     private init() {
         library = device.makeDefaultLibrary()

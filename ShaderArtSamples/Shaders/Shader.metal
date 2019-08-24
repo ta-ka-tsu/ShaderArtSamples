@@ -328,7 +328,7 @@ fragment float4 Sample1_8_Accel(float4 pixPos [[position]],
 fragment float4 BlockNoiseCamera(float4 pixPos [[position]],
                                  constant float2& res[[buffer(0)]],
                                  constant float& time[[buffer(1)]],
-                                 texture2d<float, access::sample> texture[[texture(0)]])
+                                 texture2d<float, access::sample> texture[[texture(1)]])
 {
     float4 col = 0;
 
@@ -356,7 +356,7 @@ fragment float4 BlockNoiseCamera(float4 pixPos [[position]],
 
 fragment float4 Camera(float4 pixPos [[position]],
                       constant float2& res[[buffer(0)]],
-                      texture2d<float, access::sample> texture[[texture(0)]])
+                      texture2d<float, access::sample> texture[[texture(1)]])
 {
     float4 col = 0;
     constexpr sampler s(address::clamp_to_edge, filter::linear);

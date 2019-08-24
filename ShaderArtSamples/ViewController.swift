@@ -24,8 +24,8 @@ class ViewController: UIViewController {
     // Acceleration Sensor
     let motionManager = CMMotionManager()
     
-    // Buffers
-    var videoTexture : MTLTexture! = nil
+    // Textures
+    var imageTexture : MTLTexture! = nil
 
     // Start Date
     let startDate = Date()
@@ -50,6 +50,9 @@ class ViewController: UIViewController {
         metalView.delegate = self
 
         commandQueue = gpu.device.makeCommandQueue()
+        
+        let textureLoader = MTKTextureLoader(device:gpu.device)
+        self.imageTexture = try! textureLoader.newTexture(name: "icon", scaleFactor: 0.0, bundle: nil, options: nil)
         
         // Create Pipiline
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
@@ -111,7 +114,7 @@ extension ViewController : MTKViewDelegate {
             let renderPassDesicriptor = metalView.currentRenderPassDescriptor,
             let currentDrawable = metalView.currentDrawable,
             let commandBuffer = commandQueue.makeCommandBuffer(),
-            let texture = self.cameraTexture,
+            let cameraTexture = self.cameraTexture,
             let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDesicriptor) else {
                 semaphore.signal()
                 return
@@ -127,7 +130,8 @@ extension ViewController : MTKViewDelegate {
         renderEncoder.setFragmentBuffer(gpu.volumeBuffer, offset: 0, index: 2)
         renderEncoder.setFragmentBuffer(gpu.accelerationBuffer, offset: 0, index: 3)
 
-        renderEncoder.setFragmentTexture(texture, index: 0)
+        renderEncoder.setFragmentTexture(imageTexture, index: 0)
+        renderEncoder.setFragmentTexture(cameraTexture, index: 1)
         
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         renderEncoder.endEncoding()

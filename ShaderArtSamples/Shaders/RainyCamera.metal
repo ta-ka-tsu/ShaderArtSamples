@@ -53,7 +53,7 @@ float3 RainyLayer(float2 UV, float t) {
 fragment float4 RainyCamera(float4 pixPos [[position]],
                             constant float2 &res[[buffer(0)]],
                             constant float &time[[buffer(1)]],
-                            texture2d<float, access::sample> texture[[texture(0)]])
+                            texture2d<float, access::sample> texture[[texture(1)]])
 {
     float2 pos = (pixPos.xy - float2(0.0, res.y)) * float2(1.0, -1.0)/min(res.x, res.y);
     
