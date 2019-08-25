@@ -20,6 +20,7 @@
 		2B3AB41F22E4686000EED941 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3AB41E22E4686000EED941 /* icon.png */; };
 		2B77819C23066E3B0081B063 /* RainyCamera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B77819B23066E3B0081B063 /* RainyCamera.metal */; };
 		2B77819E230681B50081B063 /* RayMarching.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B77819D230681B50081B063 /* RayMarching.metal */; };
+		2B7C843E2312560500673EE9 /* Common.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C843D2312560500673EE9 /* Common.metal */; };
 		2BB3A22622DAD3540081929C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Shader.metal */; };
 		2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Sample1.metal */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,8 @@
 		2B3AB41E22E4686000EED941 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		2B77819B23066E3B0081B063 /* RainyCamera.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RainyCamera.metal; sourceTree = "<group>"; };
 		2B77819D230681B50081B063 /* RayMarching.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RayMarching.metal; sourceTree = "<group>"; };
+		2B7C843C231255CF00673EE9 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		2B7C843D2312560500673EE9 /* Common.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Common.metal; sourceTree = "<group>"; };
 		2BB3A22522DAD3540081929C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		2BC0326C2309D1B0002482ED /* Sample1.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sample1.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +109,8 @@
 				2B77819B23066E3B0081B063 /* RainyCamera.metal */,
 				2B77819D230681B50081B063 /* RayMarching.metal */,
 				2BC0326C2309D1B0002482ED /* Sample1.metal */,
+				2B7C843C231255CF00673EE9 /* Common.h */,
+				2B7C843D2312560500673EE9 /* Common.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 			files = (
 				2B0BD0112301311600F4CF6A /* VertexShader.metal in Sources */,
 				2BB3A22622DAD3540081929C /* Shader.metal in Sources */,
+				2B7C843E2312560500673EE9 /* Common.metal in Sources */,
 				2B0BD00C22F704FF00F4CF6A /* VideoSession.swift in Sources */,
 				2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */,
 				2B77819E230681B50081B063 /* RayMarching.metal in Sources */,

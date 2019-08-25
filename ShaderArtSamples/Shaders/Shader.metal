@@ -7,24 +7,9 @@
 //
 
 #include <metal_stdlib>
-
+#include "Common.h"
 using namespace metal;
 
-static float N11(float v) {
-    return fract(sin(v)*43758.5453123);
-}
-
-static float N21(float2 p) {
-    return N11(dot(p, float2(12.9898, 78.233)));
-}
-
-static float3 hsv2rgb(float h, float s, float v) {
-    float3 a = fract(h + float3(0.0, 2.0, 1.0)/3.0)*6.0-3.0;
-    a = clamp(abs(a) - 1.0, 0.0, 1.0) - 1.0;
-    a = a*s + 1.0;
-    return a*v;
-//    return ((clamp(abs(fract(h+float3(0,2,1)/3.0)*6.0-3.0)-1.0,0.0,1.0)-1.0)*s+1.0)*v;
-}
 
 fragment float4 Sample2_1(float4 pixPos [[position]],
                           constant float2& res[[buffer(0)]])
@@ -101,7 +86,8 @@ fragment float4 Sample2_5(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv = fract(2.0 * uv) * 2.0 - 1.0;
+    uv *= 2.0;
+    uv = fract(uv) * 2.0 - 1.0;
 
     float theta = atan2(uv.y, uv.x) - time;
     float threshold = 0.2*sin(5 * theta) + 0.8;
@@ -116,7 +102,8 @@ fragment float4 Sample2_6(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv = fract(5.0 * uv) * 2.0 - 1.0;
+    uv *= 5.0;
+    uv = fract(uv) * 2.0 - 1.0;
     
     float theta = atan2(uv.y, uv.x) - time;
     float threshold = 0.2*sin(5 * theta) + 0.8;
@@ -130,7 +117,8 @@ fragment float4 Sample2_7(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv = fract(2.0 * uv) * 2.0 - 1.0;
+    uv *= 2.0;
+    uv = fract(uv) * 2.0 - 1.0;
 
     return step(length(uv), 1.0);
 }
@@ -142,8 +130,9 @@ fragment float4 Sample2_8(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    float2 id = floor(2.0 * uv);
-    uv = fract(2.0 * uv) * 2.0 - 1.0;
+    uv *= 2.0;
+    float2 id = floor(uv);
+    uv = fract(uv) * 2.0 - 1.0;
     
     float threshold = exp(-length(id));
     return step(length(uv), threshold);
@@ -217,7 +206,6 @@ fragment float4 Noise3(float4 pixPos [[position]],
     
     return N21(id);
 }
-
 
 fragment float4 Noise4(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]],
@@ -310,17 +298,98 @@ fragment float4 Color5(float4 pixPos [[position]],
     return float4(rgb, 1.0) * step(length(uv), 0.5 + 0.5*sin(3*time + 5*h));
 }
 
-// 色付き円アニメーション
+// テクスチャ(逆さ)
 fragment float4 Texture1(float4 pixPos [[position]],
                          constant float2& res[[buffer(0)]],
-                         constant float& time[[buffer(1)]],
-                         texture2d<float, access::sample> image[[texture(0)]])
+                         texture2d<float> tex[[texture(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
 
     constexpr sampler s(address::clamp_to_edge, filter::linear);
-    return image.sample(s, uv);
+    return tex.sample(s, uv);
+}
+
+// テクスチャ(正方向、クランプ)
+fragment float4 Texture2(float4 pixPos [[position]],
+                         constant float2& res[[buffer(0)]],
+                         texture2d<float> tex[[texture(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    
+    constexpr sampler s(address::clamp_to_edge, filter::linear);
+    return tex.sample(s, uv);
+}
+
+fragment float4 Texture3(float4 pixPos [[position]],
+                         constant float2& res[[buffer(0)]],
+                         constant float& time[[buffer(1)]],
+                         texture2d<float> tex[[texture(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    
+    constexpr sampler s(address::repeat, filter::linear);
+    
+    float2 id = floor(uv);
+    float d = N21(id) + time;
+    float offset = (sin(3 * d))*pow(sin(7*d), 10.0);
+    
+    return tex.sample(s, uv + offset);
+}
+
+fragment float4 Distortion(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]],
+                           texture2d<float> img[[texture(0)]],
+                           texture2d<float> tex[[texture(1)]])
+{
+    // 左上原点
+    float2 uv = pixPos.xy/min(res.x, res.y);
+    uv *= 4;
+    
+    // 歪
+//    uv.x += sin(uv.y);
+    uv *= 1.0 + 0.1 * sin(0.5 * uv.x + time) + 0.1 * sin(0.3 * uv.y + time);
+    
+    float2 st = fract(uv);
+    float2 id = floor(uv);
+
+    float random = N21(id);
+    
+    float4 col = 0.0;
+    col += step(length(st - 0.5), 0.3 + 0.2*sin(1.56 * random + 2.0 * time));
+
+    float4 red(1.0, 0.0, 0.0, 1.0);
+    col += step(0.98, fract(uv.x)) * red;
+    col += step(0.98, fract(uv.y)) * red;
+    
+//    float2 texUV = pixPos.xy/res;
+//    constexpr sampler s(address::repeat, filter::linear);
+//    float4 nega = 1.0 - col;
+//    col *= tex.sample(s, texUV);
+//    col += nega * img.sample(s, texUV);
+
+    return col;
+}
+
+fragment float4 Crystal(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]],
+                           texture2d<float> tex[[texture(1)]])
+{
+    float4 col = 0.0;
+    
+    // 左上原点
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    
+    float distortion = saturate(0.7 - length(uv - float2(0.5* sin(2.5 * time), 0.3 * cos(2.5 * time))));
+    float2 offset = -0.9 * sqrt(distortion) * uv;
+    
+    float2 texUV = pixPos.xy/res;
+    constexpr sampler s(address::repeat, filter::linear);
+    col = tex.sample(s, texUV + offset);
+    
+    return col;
 }
 
 fragment float4 Sample1_8_Accel(float4 pixPos [[position]],
@@ -347,6 +416,8 @@ fragment float4 BlockNoiseCamera(float4 pixPos [[position]],
 
     float2 uv = pixPos.xy/min(res.x, res.y);
     uv.y *= -1.0;
+    
+    uv.y += 0.3 * time;
 
     constexpr float blocksize = 20.0;
     constexpr float distortion = 0.2;

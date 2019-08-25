@@ -7,12 +7,8 @@
 //
 
 #include <metal_stdlib>
+#include "Common.h"
 using namespace metal;
-
-
-float N21(float2 p) {
-    return fract(sin(dot(p, float2(12.9898, 78.233)))*43758.5453123);
-}
 
 
 float3 RainyLayer(float2 UV, float t) {
