@@ -337,40 +337,6 @@ fragment float4 Texture3(float4 pixPos [[position]],
     return tex.sample(s, uv + offset);
 }
 
-fragment float4 Distortion(float4 pixPos [[position]],
-                           constant float2& res[[buffer(0)]],
-                           constant float& time[[buffer(1)]],
-                           texture2d<float> img[[texture(0)]],
-                           texture2d<float> tex[[texture(1)]])
-{
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 4;
-    
-    // 歪
-//    uv.x += sin(uv.y);
-    uv *= 1.0 + 0.1 * sin(0.5 * uv.x + time) + 0.1 * sin(0.3 * uv.y + time);
-    
-    float2 st = fract(uv);
-    float2 id = floor(uv);
-
-    float random = N21(id);
-    
-    float4 col = 0.0;
-    col += step(length(st - 0.5), 0.3 + 0.2*sin(1.56 * random + 2.0 * time));
-
-    float4 red(1.0, 0.0, 0.0, 1.0);
-    col += step(0.98, fract(uv.x)) * red;
-    col += step(0.98, fract(uv.y)) * red;
-    
-//    float2 texUV = pixPos.xy/res;
-//    constexpr sampler s(address::repeat, filter::linear);
-//    float4 nega = 1.0 - col;
-//    col *= tex.sample(s, texUV);
-//    col += nega * img.sample(s, texUV);
-
-    return col;
-}
 
 fragment float4 Crystal(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],

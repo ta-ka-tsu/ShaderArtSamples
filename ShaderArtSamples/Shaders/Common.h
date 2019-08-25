@@ -13,4 +13,6 @@ float N11(float s);
 float N21(float2 p);
 float3 hsv2rgb(float h, float s, float v);
 
+float grid(float2 p);
+
 #endif /* Common_h */
