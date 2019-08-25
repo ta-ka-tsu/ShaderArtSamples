@@ -24,7 +24,8 @@ class GPUDevice {
     var timeBuffer : MTLBuffer! = nil
     var volumeBuffer : MTLBuffer! = nil
     var accelerationBuffer : MTLBuffer! = nil
-    
+    var touchedPositionBuffer : MTLBuffer! = nil
+
     private init() {
         library = device.makeDefaultLibrary()
         
@@ -36,6 +37,7 @@ class GPUDevice {
         timeBuffer = device.makeBuffer(length: MemoryLayout<Float>.size, options: [])
         volumeBuffer = device.makeBuffer(length: MemoryLayout<Float>.size, options: [])
         accelerationBuffer = device.makeBuffer(length: MemoryLayout<Acceleration>.size, options: [])
+        touchedPositionBuffer = device.makeBuffer(length: 2 * MemoryLayout<Float>.size, options: [])
     }
     
     func updateResolution(width: Float, height: Float) {
@@ -52,6 +54,10 @@ class GPUDevice {
     
     func updateAcceleration(_ acceleration: Acceleration) {
         updateBuffer(acceleration, accelerationBuffer)
+    }
+    
+    func updateTouchedPosition(x : Float, y: Float) {
+        memcpy(touchedPositionBuffer.contents(), [x, y], MemoryLayout<Float>.size * 2)
     }
     
     func render() {

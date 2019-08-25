@@ -36,6 +36,9 @@ class ViewController: UIViewController {
     // Acceleration
     var acceleration = Acceleration(x:0.0, y:0.0, z:0.0)
     
+    // Acceleration
+    var touched = CGPoint(x: 0.0, y: 0.0)
+    
     // CaptureTexture
     private var cameraTexture : MTLTexture? = nil
     
@@ -86,6 +89,18 @@ class ViewController: UIViewController {
         super.viewDidDisappear(animated)
         VideoSession.shared.endSession()
     }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return; }
+
+        self.touched = touch.location(in: self.metalView)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        
+        self.touched = touch.location(in: self.metalView)
+    }
 
     @IBAction func close(_ sender: Any) {
         VideoSession.shared.endSession()
@@ -122,6 +137,7 @@ extension ViewController : MTKViewDelegate {
         gpu.updateTime(Float(Date().timeIntervalSince(startDate)))
         gpu.updateVolume(volumeLevel)
         gpu.updateAcceleration(acceleration)
+        gpu.updateTouchedPosition(x:Float(touched.x), y: Float(touched.y))
 
         renderEncoder.setRenderPipelineState(pipelineState)
 
@@ -129,6 +145,7 @@ extension ViewController : MTKViewDelegate {
         renderEncoder.setFragmentBuffer(gpu.timeBuffer, offset: 0, index: 1)
         renderEncoder.setFragmentBuffer(gpu.volumeBuffer, offset: 0, index: 2)
         renderEncoder.setFragmentBuffer(gpu.accelerationBuffer, offset: 0, index: 3)
+        renderEncoder.setFragmentBuffer(gpu.touchedPositionBuffer, offset: 0, index: 4)
 
         renderEncoder.setFragmentTexture(imageTexture, index: 0)
         renderEncoder.setFragmentTexture(cameraTexture, index: 1)
