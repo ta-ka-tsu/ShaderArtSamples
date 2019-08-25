@@ -22,6 +22,9 @@
 		2B77819E230681B50081B063 /* RayMarching.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B77819D230681B50081B063 /* RayMarching.metal */; };
 		2B7C843E2312560500673EE9 /* Common.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C843D2312560500673EE9 /* Common.metal */; };
 		2B7C8440231261DF00673EE9 /* DistortedSpace.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C843F231261DF00673EE9 /* DistortedSpace.metal */; };
+		2B7C84422312EB2E00673EE9 /* Texture.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C84412312EB2E00673EE9 /* Texture.metal */; };
+		2B7C84442312EB6100673EE9 /* Color.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C84432312EB6100673EE9 /* Color.metal */; };
+		2B7C84462312EBC500673EE9 /* Noise.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C84452312EBC500673EE9 /* Noise.metal */; };
 		2BB3A22622DAD3540081929C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Shader.metal */; };
 		2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Sample1.metal */; };
 /* End PBXBuildFile section */
@@ -45,6 +48,9 @@
 		2B7C843C231255CF00673EE9 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		2B7C843D2312560500673EE9 /* Common.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Common.metal; sourceTree = "<group>"; };
 		2B7C843F231261DF00673EE9 /* DistortedSpace.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DistortedSpace.metal; sourceTree = "<group>"; };
+		2B7C84412312EB2E00673EE9 /* Texture.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Texture.metal; sourceTree = "<group>"; };
+		2B7C84432312EB6100673EE9 /* Color.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Color.metal; sourceTree = "<group>"; };
+		2B7C84452312EBC500673EE9 /* Noise.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Noise.metal; sourceTree = "<group>"; };
 		2BB3A22522DAD3540081929C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		2BC0326C2309D1B0002482ED /* Sample1.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sample1.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +120,9 @@
 				2B7C843C231255CF00673EE9 /* Common.h */,
 				2B7C843D2312560500673EE9 /* Common.metal */,
 				2B7C843F231261DF00673EE9 /* DistortedSpace.metal */,
+				2B7C84412312EB2E00673EE9 /* Texture.metal */,
+				2B7C84432312EB6100673EE9 /* Color.metal */,
+				2B7C84452312EBC500673EE9 /* Noise.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -192,12 +201,15 @@
 			files = (
 				2B0BD0112301311600F4CF6A /* VertexShader.metal in Sources */,
 				2BB3A22622DAD3540081929C /* Shader.metal in Sources */,
+				2B7C84442312EB6100673EE9 /* Color.metal in Sources */,
 				2B7C843E2312560500673EE9 /* Common.metal in Sources */,
 				2B0BD00C22F704FF00F4CF6A /* VideoSession.swift in Sources */,
 				2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */,
 				2B77819E230681B50081B063 /* RayMarching.metal in Sources */,
 				2B0BD00022F5C47C00F4CF6A /* Library.swift in Sources */,
+				2B7C84422312EB2E00673EE9 /* Texture.metal in Sources */,
 				2B77819C23066E3B0081B063 /* RainyCamera.metal in Sources */,
+				2B7C84462312EBC500673EE9 /* Noise.metal in Sources */,
 				2B0BD00622F6A69500F4CF6A /* GPUDevice.swift in Sources */,
 				2B0BD00422F6A4A200F4CF6A /* ShadersTableViewController.swift in Sources */,
 				2B2DC69822D19C9800766B90 /* ViewController.swift in Sources */,
