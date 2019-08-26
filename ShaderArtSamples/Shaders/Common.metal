@@ -26,6 +26,11 @@ float3 hsv2rgb(float h, float s, float v) {
     //    return ((clamp(abs(fract(h+float3(0,2,1)/3.0)*6.0-3.0)-1.0,0.0,1.0)-1.0)*s+1.0)*v;
 }
 
+float mod(float a, float b)
+{
+    return a - b * floor(a/b);
+}
+
 float grid(float2 p)
 {
     float g = 0.0;

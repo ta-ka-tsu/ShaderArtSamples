@@ -171,6 +171,30 @@ fragment float4 Sample2_10(float4 pixPos [[position]],
     return step(length(uv), threshold);
 }
 
+// polar mod
+fragment float4 Sample2_11(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float theta = atan2(uv.y, uv.x);
+    float angle = M_PI_F/5;
+    
+    float pid = floor(theta/angle);
+    
+    uv = rot(-(pid + 0.5) * angle)*uv;
+
+    uv.y += 0.5;
+    uv.x -= time;
+    float2 aspect(5.0, 1.0);
+    float2 grid = aspect * uv;
+    float2 st = 2.0 * fract(grid) - 1.0;
+    st /= aspect;
+    return step(length(st), 0.1);
+}
+
 fragment float4 Crystal(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],
                            constant float& time[[buffer(1)]],
