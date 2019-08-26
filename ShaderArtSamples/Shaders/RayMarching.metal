@@ -7,6 +7,7 @@
 //
 
 #include <metal_stdlib>
+#include "Common.h"
 using namespace metal;
 
 static constant int MAX_STEPS = 100;
@@ -42,7 +43,8 @@ float dTorus(float3 p, float majorR, float minorR) {
 
 // 原点中心
 float dBox(float3 p, float3 size) {
-    return length(max(abs(p) - size, 0.0));
+    float3 d = abs(p) - size;
+    return length(max(d, 0.0)) + min(max(d.x, max(d.y, d.z)), 0.0);
 }
 
 // 無限シリンダー
