@@ -48,6 +48,8 @@ fragment float4 Texture3(float4 pixPos [[position]],
 fragment float4 Texture4(float4 pixPos [[position]],
                          constant float2& res[[buffer(0)]],
                          constant float& time[[buffer(1)]],
+                         constant float& volume[[buffer(2)]],
+                         constant float3& accel[[buffer(3)]],
                          texture2d<float> tex[[texture(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
@@ -56,7 +58,7 @@ fragment float4 Texture4(float4 pixPos [[position]],
     
     float2 id = floor(uv * 40);
     float d = N11(id.y + N11(fract(.5*time)));
-    float offset = 0.1 * step(0.9, d);
+    float offset = 0.1 * volume * step(0.98, d);
     
     uv.x += offset;
     return tex.sample(s, uv);

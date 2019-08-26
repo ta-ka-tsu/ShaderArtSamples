@@ -170,12 +170,6 @@ float GetLight(float3 p, float time) {
     return diffuse;
 }
 
-float2x2 rot(float theta) {
-    float c = cos(theta);
-    float s = sin(theta);
-    return float2x2(c, -s, s, c);
-}
-
 fragment float4 RayMarching(float4 pixPos [[position]],
                             constant float2& res[[buffer(0)]],
                             constant float& time [[buffer(1)]]) {

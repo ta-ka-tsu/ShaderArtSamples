@@ -15,4 +15,6 @@ float3 hsv2rgb(float h, float s, float v);
 
 float grid(float2 p);
 
+metal::float2x2 rot(float radian);
+
 #endif /* Common_h */

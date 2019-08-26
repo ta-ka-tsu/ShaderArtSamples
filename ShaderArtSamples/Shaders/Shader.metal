@@ -153,13 +153,6 @@ fragment float4 Sample2_9(float4 pixPos [[position]],
     return step(length(uv), threshold);
 }
 
-float2 rot(float2 p, float theta) {
-    float c = cos(theta);
-    float s = sin(theta);
-    float2x2 mat(c, -s, s, c);
-    return mat * p;
-}
-
 // グリッド毎にサイズを変えた円(中心版)+アニメーション
 fragment float4 Sample2_10(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],
@@ -168,7 +161,7 @@ fragment float4 Sample2_10(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv = rot(uv, time);
+    uv = rot(time) * uv;
     
     uv = 2.0 * uv + 0.5;
     float2 id = floor(uv);
@@ -223,8 +216,6 @@ fragment float4 BlockNoiseCamera(float4 pixPos [[position]],
     float2 uv = pixPos.xy/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv.y += 0.3 * time;
-
     constexpr float blocksize = 20.0;
     constexpr float distortion = 0.2;
     

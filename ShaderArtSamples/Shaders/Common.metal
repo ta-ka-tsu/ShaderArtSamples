@@ -34,3 +34,11 @@ float grid(float2 p)
     g = max(g, step(0.98, p.y));
     return g;
 }
+
+float2x2 rot(float radian)
+{
+    float c = cos(radian);
+    float s = sin(radian);
+    
+    return float2x2(c, s, -s, c);
+}
