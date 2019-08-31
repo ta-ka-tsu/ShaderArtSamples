@@ -14,9 +14,10 @@ using namespace metal;
 fragment float4 Distorted1(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]])
 {
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 5;
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv *= 2;
     
     float4 red(1.0, 0.0, 0.0, 1.0);
     return red * grid(uv);
@@ -25,10 +26,11 @@ fragment float4 Distorted1(float4 pixPos [[position]],
 fragment float4 Distorted2(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]])
 {
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 5;
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
     
+    uv *= 2;
+
     uv.x += sin(uv.y);
     
     float4 red(1.0, 0.0, 0.0, 1.0);
@@ -38,9 +40,10 @@ fragment float4 Distorted2(float4 pixPos [[position]],
 fragment float4 Distorted3(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]])
 {
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 5;
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv *= 2;
 
     uv.x += sin(uv.y);
     uv.y += sin(uv.x);
@@ -53,10 +56,11 @@ fragment float4 Distorted4(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],
                            constant float& time[[buffer(1)]])
 {
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 5;
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
     
+    uv *= 2;
+
     uv.x += 0.5 * sin(uv.y + time) + 0.5;
     uv.y += 0.5 * sin(uv.x + time) + 0.5;
     
@@ -71,7 +75,7 @@ fragment float4 Distorted5(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv *= 4;
+    uv *= 2;
     
     uv *= 1.0 + (0.1 * sin(time) + 0.1) * length(uv);
     
@@ -83,10 +87,11 @@ fragment float4 Distorted6(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],
                            constant float& time[[buffer(1)]])
 {
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 5;
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
     
+    uv *= 2;
+
     uv.x += 0.5 * sin(uv.y + time) + 0.5;
     uv.y += 0.5 * sin(uv.x + time) + 0.5;
     
@@ -101,10 +106,11 @@ fragment float4 Distorted7(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],
                            constant float& time[[buffer(1)]])
 {
-    // 左上原点
-    float2 uv = pixPos.xy/min(res.x, res.y);
-    uv *= 5;
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
     
+    uv *= 2;
+
     uv.x += 0.5 * sin(uv.y + time) + 0.5;
     uv.y += 0.5 * sin(uv.x + time) + 0.5;
     
