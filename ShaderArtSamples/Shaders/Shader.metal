@@ -41,43 +41,6 @@ fragment float4 Sample2_1_3(float4 pixPos [[position]],
     return step(chebyshevDist, 1.0);
 }
 
-// 花
-fragment float4 Sample2_2(float4 pixPos [[position]],
-                          constant float2& res[[buffer(0)]])
-{
-    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv.y *= -1.0;
-    
-    float theta = atan2(uv.y, uv.x);
-    float threshold = 0.5*sin(5 * theta) + 0.5;
-    return step(length(uv), threshold);
-}
-
-// 星
-fragment float4 Sample2_3(float4 pixPos [[position]],
-                          constant float2& res[[buffer(0)]])
-{
-    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv.y *= -1.0;
-    
-    float theta = atan2(uv.y, uv.x);
-    float threshold = 0.2*sin(5 * theta) + 0.8;
-    return step(length(uv), threshold);
-}
-
-// 回転する星
-fragment float4 Sample2_4(float4 pixPos [[position]],
-                          constant float2& res[[buffer(0)]],
-                          constant float& time[[buffer(1)]])
-{
-    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    uv.y *= -1.0;
-    
-    float theta = atan2(uv.y, uv.x) - time;
-    float threshold = 0.2*sin(5 * theta) + 0.8;
-    return step(length(uv), threshold);
-}
-
 // 複製した回転する星
 fragment float4 Sample2_5(float4 pixPos [[position]],
                           constant float2& res[[buffer(0)]],
