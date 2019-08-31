@@ -54,7 +54,7 @@ fragment float4 Color3(float4 pixPos [[position]],
     return float4(rgb, 1.0);
 }
 
-// 色付き円アニメーション
+// 色付きブロックノイズ色相変化
 fragment float4 Color4(float4 pixPos [[position]],
                        constant float2& res[[buffer(0)]],
                        constant float& time[[buffer(1)]])
@@ -84,4 +84,21 @@ fragment float4 Color5(float4 pixPos [[position]],
     
     uv = fract(4*uv)*2.0 - 1.0;
     return float4(rgb, 1.0) * step(length(uv), 0.5 + 0.5*sin(3*time + 5*h));
+}
+
+// 色相環
+fragment float4 Color6(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+
+    float l = length(uv);
+    float ring = abs(step(0.8, l) - step(1.0, l));
+    float phase = atan2(uv.y, uv.x) + M_PI_F;// 0 to 2*PI
+    float h = phase/(2.0 * M_PI_F);
+    float s = saturate(l);
+    float3 rgb = hsv2rgb(h, s, 1.0);
+    
+    return float4(rgb, 1.0)*ring;
 }
