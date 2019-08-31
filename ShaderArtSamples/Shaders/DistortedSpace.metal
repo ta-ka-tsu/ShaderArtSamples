@@ -122,3 +122,20 @@ fragment float4 Distorted7(float4 pixPos [[position]],
     
     return col * step(length(uv), threshold);
 }
+
+fragment float4 Distorted8(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv *= 5;
+    
+    float2 polar(length(uv), 12 / M_PI_F * atan2(uv.y, uv.x));
+    polar = 2.0*fract(polar) - 1.0;
+
+    float phase = atan2(polar.y, polar.x);
+    float t = 0.25 * sin(5*phase + 2.0* time) + 0.75;
+    return step(length(polar), t);
+}

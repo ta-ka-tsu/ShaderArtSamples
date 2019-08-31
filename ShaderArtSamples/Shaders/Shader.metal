@@ -186,13 +186,24 @@ fragment float4 Sample2_11(float4 pixPos [[position]],
     
     uv = rot(-(pid + 0.5) * angle)*uv;
 
-    uv.y += 0.5;
-    uv.x -= time;
-    float2 aspect(5.0, 1.0);
-    float2 grid = aspect * uv;
-    float2 st = 2.0 * fract(grid) - 1.0;
-    st /= aspect;
-    return step(length(st), 0.1);
+    uv *= 5;
+    uv.x = fract(uv.x) - 0.5;
+
+    return step(length(uv), 0.5);
+}
+
+// polar mod
+fragment float4 Sample2_12(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float r = length(uv);
+    float t = atan2(uv.y, uv.x);
+    
+    return float4(r, t, 0.0, 1.0);
 }
 
 fragment float4 Crystal(float4 pixPos [[position]],
@@ -201,12 +212,13 @@ fragment float4 Crystal(float4 pixPos [[position]],
                            texture2d<float> tex[[texture(1)]])
 {
     float4 col = 0.0;
-    
-    // 左上原点
+
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
-    
-    float distortion = saturate(0.7 - length(uv - float2(0.5* sin(2.5 * time), 0.3 * cos(2.5 * time))));
-    float2 offset = -0.9 * sqrt(distortion) * uv;
+
+    float size = 0.7;
+    float mask = step(length(uv), size);
+    float distortion = -0.9;
+    float2 offset = distortion * sqrt(length(uv)) * uv * mask;
     
     float2 texUV = pixPos.xy/res;
     constexpr sampler s(address::repeat, filter::linear);
