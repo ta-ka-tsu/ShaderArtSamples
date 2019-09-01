@@ -11,6 +11,7 @@
 using namespace metal;
 
 
+// 音に応じて星の大きさを変える
 fragment float4 Demo1(float4 pixPos [[position]],
                       constant float2& res[[buffer(0)]],
                       constant float& time[[buffer(1)]],
@@ -20,28 +21,30 @@ fragment float4 Demo1(float4 pixPos [[position]],
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
 
-    uv *= 10.0 * clamp(volume, 0.1, 1.0);
+    uv *= 1.0/clamp(volume, 0.1, 1.0);
     
     float t = 0.2 * sin(5 * atan2(uv.y, uv.x)) + 0.8;
     return step(length(uv), t);
 }
 
+// タッチ位置を中心に歪ませる
 fragment float4 Demo2(float4 pixPos [[position]],
                       constant float2& res[[buffer(0)]],
+                      constant float& time[[buffer(1)]],
                       constant float2& touch[[buffer(4)]])
 {
-    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    float2 uv = 2.0 * (pixPos.xy - touch)/min(res.x, res.y);
     uv.y *= -1.0;
 
     uv *= 2.0;
 
-    float2 t = (2.0 * touch - res)/min(res.x, res.y);
-    t.y *= -1.0;
-    t *= 2.0;
-
-    float2 uv2 = (uv - t) * (1.0 + 0.1 * (length(uv - t)*length(uv-t)));
+    float l = length(uv);
+    float2 uv2 = uv*(1 - 0.8*exp(-0.2*l*l) * (0.4 * cos(16*l)));
+    
+    return grid(uv2);
+    
     uv2 = 2*fract(uv2) - 1;
     
-    float threshold = 0.2 * sin(5*atan2(uv2.y, uv2.x)) + 0.8;
+    float threshold = 0.2 * sin(5*atan2(uv2.y, uv2.x) - time) + 0.8;
     return step(length(uv2), threshold);//grid(uv2);
 }
