@@ -14,6 +14,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var metalView: MTKView!
     
+    let scaleFactor = UIScreen.main.scale
+    
     var gpu: GPUDevice!
     var fragmentShader: MTLFunction!
     
@@ -137,7 +139,7 @@ extension ViewController : MTKViewDelegate {
         gpu.updateTime(Float(Date().timeIntervalSince(startDate)))
         gpu.updateVolume(volumeLevel)
         gpu.updateAcceleration(acceleration)
-        gpu.updateTouchedPosition(x:Float(touched.x), y: Float(touched.y))
+        gpu.updateTouchedPosition(x:Float(scaleFactor*touched.x), y: Float(scaleFactor*touched.y)) // 解像度と合わせておく
 
         renderEncoder.setRenderPipelineState(pipelineState)
 

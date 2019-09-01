@@ -28,6 +28,7 @@
 		2B7C8448231A902000673EE9 /* Polar.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8447231A902000673EE9 /* Polar.metal */; };
 		2B7C844A231A94D800673EE9 /* Animation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8449231A94D800673EE9 /* Animation.metal */; };
 		2B7C844C231B185200673EE9 /* DistanceField3d.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844B231B185200673EE9 /* DistanceField3d.metal */; };
+		2B7C844E231B1D3000673EE9 /* Demo.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844D231B1D3000673EE9 /* Demo.metal */; };
 		2BB3A22622DAD3540081929C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Shader.metal */; };
 		2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Sample1.metal */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		2B7C8447231A902000673EE9 /* Polar.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Polar.metal; sourceTree = "<group>"; };
 		2B7C8449231A94D800673EE9 /* Animation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Animation.metal; sourceTree = "<group>"; };
 		2B7C844B231B185200673EE9 /* DistanceField3d.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DistanceField3d.metal; sourceTree = "<group>"; };
+		2B7C844D231B1D3000673EE9 /* Demo.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Demo.metal; sourceTree = "<group>"; };
 		2BB3A22522DAD3540081929C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		2BC0326C2309D1B0002482ED /* Sample1.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sample1.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +134,7 @@
 				2B7C8447231A902000673EE9 /* Polar.metal */,
 				2B7C8449231A94D800673EE9 /* Animation.metal */,
 				2B7C844B231B185200673EE9 /* DistanceField3d.metal */,
+				2B7C844D231B1D3000673EE9 /* Demo.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				2B0BD00422F6A4A200F4CF6A /* ShadersTableViewController.swift in Sources */,
 				2B2DC69822D19C9800766B90 /* ViewController.swift in Sources */,
 				2B7C8440231261DF00673EE9 /* DistortedSpace.metal in Sources */,
+				2B7C844E231B1D3000673EE9 /* Demo.metal in Sources */,
 				2B2DC69622D19C9800766B90 /* AppDelegate.swift in Sources */,
 				2B7C844A231A94D800673EE9 /* Animation.metal in Sources */,
 				2B7C8448231A902000673EE9 /* Polar.metal in Sources */,

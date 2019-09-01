@@ -23,12 +23,12 @@ float smoothmin(float d1, float d2, float k) {
 
 float GetDistance(float3 p) {
     float d = dPlane(p);
-    d = min(d, dBox(p - float3(0.0, 0.5, 3.0), float3(0.5, 0.5, 0.5)));
-    d = min(d, dSphere(p - float3(2.0, 1.0, 6.0), 1.0));
-    d = min(d, dTorus(p - float3(-1.0, 0.5, 6.0), 1.5, 0.3));
-    d = min(d, dCapsule(p, float3(3.0, 1.0, 3.0), float3(4.0, 2.0, 5.0), 0.3));
-    d = min(d, dCylinder(p, float3(1.5, 0.0, 3.0), float3(1.5, 1.0, 3.0), 0.5));
-    d = min(d, dInfCylinder(p, float3(-3.5, 0.0, 5.0), float3(-3.5, 1.0, 5.0), 0.5));
+    d = min(d, dBox(p - float3(-2.0, 0.7, 8.0), float3(0.7, 0.7, 0.7)));
+    d = min(d, dSphere(p - float3(4.0, 4.5, 24.0), 2.0));
+    d = min(d, dTorus(p - float3(-1.0, 1.0, 12.0), 1.5, 0.4));
+    d = min(d, dCapsule(p, float3(3.0, 1.0, 18.0), float3(3.5, 2.0, 10.0), 0.3));
+    d = min(d, dCylinder(p, float3(1.5, 0.0, 8.0), float3(1.5, 1.0, 8.0), 0.5));
+    d = min(d, dInfCylinder(p, float3(-5.5, 0.0, 15.0), float3(-5.5, 1.0, 15.0), 0.5));
     return d;
 }
 
@@ -55,7 +55,7 @@ float3 GetPointLightDirection(float3 from, float3 lightPos) {
 }
 
 float GetLight(float3 p, float time) {
-    float3 toLightDir = GetPointLightDirection(p, float3(0.0, 5.0, 2.0));
+    float3 toLightDir = GetPointLightDirection(p, float3(0.0, 5.0, 5.0));
     float3 normal = GetNormal(p);
     
     float diffuse = dot(normal, toLightDir);
@@ -65,14 +65,14 @@ float GetLight(float3 p, float time) {
     return diffuse;
 }
 
-fragment float4 RayMarching1(float4 pixPos [[position]],
-                             constant float2& res[[buffer(0)]],
-                             constant float& time [[buffer(1)]]) {
+fragment float4 RayMarching(float4 pixPos [[position]],
+                            constant float2& res[[buffer(0)]],
+                            constant float& time [[buffer(1)]]) {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
     float3 ro = float3(0.0, 2.0, 0.0);
-    float3 rd = normalize(float3(uv.x, uv.y, 1.0));
+    float3 rd = normalize(float3(uv.x, uv.y, 3.0));
     
     float d = RayMarch(ro, rd);
     
