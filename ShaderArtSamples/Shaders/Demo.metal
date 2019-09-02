@@ -48,3 +48,21 @@ fragment float4 Demo2(float4 pixPos [[position]],
     float threshold = 0.2 * sin(5*atan2(uv2.y, uv2.x) - time) + 0.8;
     return step(length(uv2), threshold);//grid(uv2);
 }
+
+// 指で右になぞるほど解像度が荒くなるカメラ
+fragment float4 Demo3(float4 pixPos [[position]],
+                      constant float2& res[[buffer(0)]],
+                      constant float2& touch[[buffer(4)]],
+                      texture2d<float> texture[[texture(1)]])
+{
+    constexpr sampler s(address::clamp_to_edge, filter::linear);
+    float2 uv = pixPos.xy/res;
+    
+    float ratio = touch.x/res.x;
+    float xDivider = (res.x - 10.0)*exp(-10.0*ratio) + 10;
+    float2 showRes = xDivider * float2(1.0, res.y/res.x);
+    
+    uv = floor(showRes*uv)/showRes;
+    
+    return float4(texture.sample(s, uv));
+}
