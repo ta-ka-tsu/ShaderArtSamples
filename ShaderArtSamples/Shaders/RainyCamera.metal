@@ -42,6 +42,7 @@ float3 RainyLayer(float2 UV, float t) {
     fogTrail *= 1.0 - smoothstep(0.04, 0.05, abs(dropPos.x));
     
     float2 offset = drop * dropPos + trail * trailPos;
+    offset.y *= -1.0;
     
     return float3(offset, fogTrail);
 }

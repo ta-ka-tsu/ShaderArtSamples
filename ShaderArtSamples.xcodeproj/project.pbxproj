@@ -29,6 +29,7 @@
 		2B7C844A231A94D800673EE9 /* Animation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8449231A94D800673EE9 /* Animation.metal */; };
 		2B7C844C231B185200673EE9 /* DistanceField3d.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844B231B185200673EE9 /* DistanceField3d.metal */; };
 		2B7C844E231B1D3000673EE9 /* Demo.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844D231B1D3000673EE9 /* Demo.metal */; };
+		2B7C8450231C55FD00673EE9 /* RainyCameraStepByStep.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844F231C55FD00673EE9 /* RainyCameraStepByStep.metal */; };
 		2BB3A22622DAD3540081929C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Shader.metal */; };
 		2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Sample1.metal */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		2B7C8449231A94D800673EE9 /* Animation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Animation.metal; sourceTree = "<group>"; };
 		2B7C844B231B185200673EE9 /* DistanceField3d.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DistanceField3d.metal; sourceTree = "<group>"; };
 		2B7C844D231B1D3000673EE9 /* Demo.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Demo.metal; sourceTree = "<group>"; };
+		2B7C844F231C55FD00673EE9 /* RainyCameraStepByStep.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RainyCameraStepByStep.metal; sourceTree = "<group>"; };
 		2BB3A22522DAD3540081929C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		2BC0326C2309D1B0002482ED /* Sample1.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sample1.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,6 +125,7 @@
 				2B0BD0102301311600F4CF6A /* VertexShader.metal */,
 				2BB3A22522DAD3540081929C /* Shader.metal */,
 				2B77819B23066E3B0081B063 /* RainyCamera.metal */,
+				2B7C844F231C55FD00673EE9 /* RainyCameraStepByStep.metal */,
 				2B77819D230681B50081B063 /* RayMarching.metal */,
 				2BC0326C2309D1B0002482ED /* Sample1.metal */,
 				2B7C843C231255CF00673EE9 /* Common.h */,
@@ -230,6 +233,7 @@
 				2B7C844E231B1D3000673EE9 /* Demo.metal in Sources */,
 				2B2DC69622D19C9800766B90 /* AppDelegate.swift in Sources */,
 				2B7C844A231A94D800673EE9 /* Animation.metal in Sources */,
+				2B7C8450231C55FD00673EE9 /* RainyCameraStepByStep.metal in Sources */,
 				2B7C8448231A902000673EE9 /* Polar.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
