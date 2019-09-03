@@ -70,3 +70,37 @@ fragment float4 Polar5(float4 pixPos [[position]],
     float threshold = min(fract(2.5 * theta/M_PI_F), 1.0 - fract(2.5 * theta/M_PI_F)) + 0.5;
     return step(length(uv), threshold);
 }
+
+// 極座標をRGにマッピング
+fragment float4 Polar6(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float r = length(uv);
+    float t = 0.5 * atan2(uv.y, uv.x)/M_PI_F + 0.5;
+    
+    return float4(r, t, 0.0, 1.0);
+}
+
+// polar mod
+fragment float4 Polar7(float4 pixPos [[position]],
+                       constant float2& res[[buffer(0)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    float theta = atan2(uv.y, uv.x);
+    float angle = M_PI_F/5;
+    
+    float pid = floor(theta/angle);
+    
+    uv = rot(-(pid + 0.5) * angle)*uv;
+    
+    uv *= 5;
+    uv.x = fract(uv.x) - 0.5;
+    
+    return step(length(uv), 0.5);
+}
+

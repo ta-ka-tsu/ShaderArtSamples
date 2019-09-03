@@ -30,8 +30,11 @@
 		2B7C844C231B185200673EE9 /* DistanceField3d.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844B231B185200673EE9 /* DistanceField3d.metal */; };
 		2B7C844E231B1D3000673EE9 /* Demo.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844D231B1D3000673EE9 /* Demo.metal */; };
 		2B7C8450231C55FD00673EE9 /* RainyCameraStepByStep.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C844F231C55FD00673EE9 /* RainyCameraStepByStep.metal */; };
-		2BB3A22622DAD3540081929C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Shader.metal */; };
-		2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Sample1.metal */; };
+		2B7C8452231E6EAE00673EE9 /* ID.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8451231E6EAE00673EE9 /* ID.metal */; };
+		2B7C8454231E709200673EE9 /* Replication.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8453231E709200673EE9 /* Replication.metal */; };
+		2B7C8456231E76DE00673EE9 /* Camera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8455231E76DE00673EE9 /* Camera.metal */; };
+		2BB3A22622DAD3540081929C /* Others.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Others.metal */; };
+		2BC0326D2309D1B0002482ED /* Basic.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Basic.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,8 +64,11 @@
 		2B7C844B231B185200673EE9 /* DistanceField3d.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DistanceField3d.metal; sourceTree = "<group>"; };
 		2B7C844D231B1D3000673EE9 /* Demo.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Demo.metal; sourceTree = "<group>"; };
 		2B7C844F231C55FD00673EE9 /* RainyCameraStepByStep.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RainyCameraStepByStep.metal; sourceTree = "<group>"; };
-		2BB3A22522DAD3540081929C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
-		2BC0326C2309D1B0002482ED /* Sample1.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sample1.metal; sourceTree = "<group>"; };
+		2B7C8451231E6EAE00673EE9 /* ID.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ID.metal; sourceTree = "<group>"; };
+		2B7C8453231E709200673EE9 /* Replication.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Replication.metal; sourceTree = "<group>"; };
+		2B7C8455231E76DE00673EE9 /* Camera.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Camera.metal; sourceTree = "<group>"; };
+		2BB3A22522DAD3540081929C /* Others.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Others.metal; sourceTree = "<group>"; };
+		2BC0326C2309D1B0002482ED /* Basic.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Basic.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,11 +129,11 @@
 			isa = PBXGroup;
 			children = (
 				2B0BD0102301311600F4CF6A /* VertexShader.metal */,
-				2BB3A22522DAD3540081929C /* Shader.metal */,
+				2BB3A22522DAD3540081929C /* Others.metal */,
 				2B77819B23066E3B0081B063 /* RainyCamera.metal */,
 				2B7C844F231C55FD00673EE9 /* RainyCameraStepByStep.metal */,
 				2B77819D230681B50081B063 /* RayMarching.metal */,
-				2BC0326C2309D1B0002482ED /* Sample1.metal */,
+				2BC0326C2309D1B0002482ED /* Basic.metal */,
 				2B7C843C231255CF00673EE9 /* Common.h */,
 				2B7C843D2312560500673EE9 /* Common.metal */,
 				2B7C843F231261DF00673EE9 /* DistortedSpace.metal */,
@@ -138,6 +144,9 @@
 				2B7C8449231A94D800673EE9 /* Animation.metal */,
 				2B7C844B231B185200673EE9 /* DistanceField3d.metal */,
 				2B7C844D231B1D3000673EE9 /* Demo.metal */,
+				2B7C8451231E6EAE00673EE9 /* ID.metal */,
+				2B7C8453231E709200673EE9 /* Replication.metal */,
+				2B7C8455231E76DE00673EE9 /* Camera.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -216,12 +225,15 @@
 			files = (
 				2B0BD0112301311600F4CF6A /* VertexShader.metal in Sources */,
 				2B7C844C231B185200673EE9 /* DistanceField3d.metal in Sources */,
-				2BB3A22622DAD3540081929C /* Shader.metal in Sources */,
+				2B7C8452231E6EAE00673EE9 /* ID.metal in Sources */,
+				2BB3A22622DAD3540081929C /* Others.metal in Sources */,
 				2B7C84442312EB6100673EE9 /* Color.metal in Sources */,
 				2B7C843E2312560500673EE9 /* Common.metal in Sources */,
+				2B7C8456231E76DE00673EE9 /* Camera.metal in Sources */,
 				2B0BD00C22F704FF00F4CF6A /* VideoSession.swift in Sources */,
-				2BC0326D2309D1B0002482ED /* Sample1.metal in Sources */,
+				2BC0326D2309D1B0002482ED /* Basic.metal in Sources */,
 				2B77819E230681B50081B063 /* RayMarching.metal in Sources */,
+				2B7C8454231E709200673EE9 /* Replication.metal in Sources */,
 				2B0BD00022F5C47C00F4CF6A /* Library.swift in Sources */,
 				2B7C84422312EB2E00673EE9 /* Texture.metal in Sources */,
 				2B77819C23066E3B0081B063 /* RainyCamera.metal in Sources */,
