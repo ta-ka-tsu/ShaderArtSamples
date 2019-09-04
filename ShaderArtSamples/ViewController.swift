@@ -92,6 +92,10 @@ class ViewController: UIViewController {
         VideoSession.shared.endSession()
     }
     
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return; }
 
