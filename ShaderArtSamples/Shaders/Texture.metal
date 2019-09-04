@@ -33,7 +33,7 @@ fragment float4 Texture2(float4 pixPos [[position]],
     return tex.sample(s, uv);
 }
 
-// テクスチャ(正方向、クランプ)
+// テクスチャ(正方向、リピート)
 fragment float4 Texture3(float4 pixPos [[position]],
                          constant float2& res[[buffer(0)]],
                          texture2d<float> tex[[texture(0)]])

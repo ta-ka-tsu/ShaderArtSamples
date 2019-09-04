@@ -33,6 +33,7 @@
 		2B7C8452231E6EAE00673EE9 /* ID.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8451231E6EAE00673EE9 /* ID.metal */; };
 		2B7C8454231E709200673EE9 /* Replication.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8453231E709200673EE9 /* Replication.metal */; };
 		2B7C8456231E76DE00673EE9 /* Camera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8455231E76DE00673EE9 /* Camera.metal */; };
+		2B7C8458231EA3CD00673EE9 /* CodSys.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C8457231EA3CD00673EE9 /* CodSys.metal */; };
 		2BB3A22622DAD3540081929C /* Others.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BB3A22522DAD3540081929C /* Others.metal */; };
 		2BC0326D2309D1B0002482ED /* Basic.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0326C2309D1B0002482ED /* Basic.metal */; };
 /* End PBXBuildFile section */
@@ -67,6 +68,7 @@
 		2B7C8451231E6EAE00673EE9 /* ID.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ID.metal; sourceTree = "<group>"; };
 		2B7C8453231E709200673EE9 /* Replication.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Replication.metal; sourceTree = "<group>"; };
 		2B7C8455231E76DE00673EE9 /* Camera.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Camera.metal; sourceTree = "<group>"; };
+		2B7C8457231EA3CD00673EE9 /* CodSys.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CodSys.metal; sourceTree = "<group>"; };
 		2BB3A22522DAD3540081929C /* Others.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Others.metal; sourceTree = "<group>"; };
 		2BC0326C2309D1B0002482ED /* Basic.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Basic.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +149,7 @@
 				2B7C8451231E6EAE00673EE9 /* ID.metal */,
 				2B7C8453231E709200673EE9 /* Replication.metal */,
 				2B7C8455231E76DE00673EE9 /* Camera.metal */,
+				2B7C8457231EA3CD00673EE9 /* CodSys.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 			files = (
 				2B0BD0112301311600F4CF6A /* VertexShader.metal in Sources */,
 				2B7C844C231B185200673EE9 /* DistanceField3d.metal in Sources */,
+				2B7C8458231EA3CD00673EE9 /* CodSys.metal in Sources */,
 				2B7C8452231E6EAE00673EE9 /* ID.metal in Sources */,
 				2BB3A22622DAD3540081929C /* Others.metal in Sources */,
 				2B7C84442312EB6100673EE9 /* Color.metal in Sources */,

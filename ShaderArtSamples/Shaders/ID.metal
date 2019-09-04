@@ -11,8 +11,8 @@
 using namespace metal;
 
 // 複製した円
-fragment float4 Identification1(float4 pixPos [[position]],
-                                constant float2& res[[buffer(0)]])
+fragment float4 Id1(float4 pixPos [[position]],
+                    constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
@@ -24,8 +24,8 @@ fragment float4 Identification1(float4 pixPos [[position]],
 }
 
 // グリッド毎にサイズを変えた円
-fragment float4 Identification2(float4 pixPos [[position]],
-                                constant float2& res[[buffer(0)]])
+fragment float4 Id2(float4 pixPos [[position]],
+                    constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
@@ -39,8 +39,8 @@ fragment float4 Identification2(float4 pixPos [[position]],
 }
 
 // グリッド毎にサイズを変えた円(中心版)
-fragment float4 Identification3(float4 pixPos [[position]],
-                                constant float2& res[[buffer(0)]])
+fragment float4 Id3(float4 pixPos [[position]],
+                    constant float2& res[[buffer(0)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
@@ -54,9 +54,9 @@ fragment float4 Identification3(float4 pixPos [[position]],
 }
 
 // グリッド毎にサイズを変えた円(中心版)+アニメーション
-fragment float4 Identification4(float4 pixPos [[position]],
-                                constant float2& res[[buffer(0)]],
-                                constant float& time[[buffer(1)]])
+fragment float4 Id4(float4 pixPos [[position]],
+                    constant float2& res[[buffer(0)]],
+                    constant float& time[[buffer(1)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
