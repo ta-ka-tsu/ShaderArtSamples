@@ -116,6 +116,7 @@ fragment float4 Distorted7(float4 pixPos [[position]],
     return red * grid(uv);
 }
 
+// せん断
 fragment float4 Distorted8(float4 pixPos [[position]],
                            constant float2& res[[buffer(0)]],
                            constant float& time[[buffer(1)]])
@@ -125,6 +126,21 @@ fragment float4 Distorted8(float4 pixPos [[position]],
     
     uv *= 2;
 
+    uv.x += uv.y;
+    
+    float4 red(1.0, 0.0, 0.0, 1.0);
+    return red * grid(uv);
+}
+
+fragment float4 Distorted9(float4 pixPos [[position]],
+                           constant float2& res[[buffer(0)]],
+                           constant float& time[[buffer(1)]])
+{
+    float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
+    uv.y *= -1.0;
+    
+    uv *= 2;
+    
     uv.x += 0.5 * sin(uv.y + time) + 0.5;
     uv.y += 0.5 * sin(uv.x + time) + 0.5;
     

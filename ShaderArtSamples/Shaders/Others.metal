@@ -39,6 +39,9 @@ fragment float4 AccelSensor(float4 pixPos [[position]],
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     
-    uv += accel.yx;
-    return step(length(uv), 0.5);
+    float r = step(length(uv + accel.yx), 0.5);
+    float g = step(length(uv + 1.5 * accel.yx), 0.5);
+    float b = step(length(uv + 2.5 * accel.yx), 0.5);
+    
+    return float4(r, g, b, 1.0);
 }

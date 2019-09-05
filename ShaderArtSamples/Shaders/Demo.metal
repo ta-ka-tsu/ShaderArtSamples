@@ -88,17 +88,27 @@ fragment float4 Demo3(float4 pixPos [[position]],
 // 音に応じて星の大きさを変える
 fragment float4 InteractionDemo1(float4 pixPos [[position]],
                                  constant float2& res[[buffer(0)]],
+                                 constant float& time[[buffer(1)]],
                                  constant float& volume[[buffer(2)]])
 {
     float2 uv = (2.0 * pixPos.xy - res)/min(res.x, res.y);
     uv.y *= -1.0;
     
-    uv *= 1.0/clamp(volume, 0.1, 0.9);
+    float v = volume;
+    float2 smallUV = 2.0 * fract(uv * 3 * v) - 1.0;
+    float t1 = 0.2 * sin(5 * atan2(smallUV.y, smallUV.x) + 3.0 * time) + 0.8;
+    float smallStar = 0.6 * v * step(length(smallUV), t1);
     
-    float t = 0.2 * sin(5 * atan2(uv.y, uv.x)) + 0.8;
-    float4 yellowy = mix(float4(1.0, 1.0, 1.0, 1.0), float4(1.0, 1.0, 0.0, 1.0), smoothstep(0.6, 0.9, volume));
+    uv *= 0.8/clamp(v, 0.1, 0.8);
     
-    return step(length(uv), t)*yellowy;
+    float t2 = 0.2 * sin(5 * atan2(uv.y, uv.x)) + 0.8;
+    float star = step(length(uv), t2);
+    float4 yellowy = mix(float4(1.0, 1.0, 1.0, 1.0), float4(1.0, 1.0, 0.0, 1.0), smoothstep(0.6, 0.9, v));
+
+    return mix(smallStar, yellowy, star);
+    
+    
+    return step(length(uv), t2)*yellowy;
 }
 
 // 指で右になぞるほど解像度が荒くなるカメラ

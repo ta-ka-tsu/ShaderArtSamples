@@ -55,7 +55,7 @@ float3 GetPointLightDirection(float3 from, float3 lightPos) {
 }
 
 float GetLight(float3 p, float time) {
-    float3 toLightDir = GetPointLightDirection(p, float3(0.0, 5.0, 5.0));
+    float3 toLightDir = GetPointLightDirection(p, float3(2.0*sin(time), 5.0, 5.0*cos(time)));
     float3 normal = GetNormal(p);
     
     float diffuse = dot(normal, toLightDir);

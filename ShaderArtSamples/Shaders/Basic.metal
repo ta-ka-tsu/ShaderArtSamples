@@ -16,7 +16,7 @@ fragment float4 Basic1(float4 pixPos [[position]])
 
 fragment float4 Basic2(float4 pixPos [[position]])
 {
-    return length(pixPos.xy)/300.0;
+    return clamp(length(pixPos.xy)/300.0, 0.0, 1.0);
 }
 
 fragment float4 Basic3(float4 pixPos [[position]])
