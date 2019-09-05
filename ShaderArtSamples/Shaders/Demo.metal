@@ -81,7 +81,9 @@ fragment float4 Demo3(float4 pixPos [[position]],
     float threshold = 0.65 * min(abs(sin(2.5 * theta)), abs(cos(2.5 * theta)) + 0.8) + 0.35;
     float flower = step(length(uv), size * threshold);
     
-    return float4(flower * hsv2rgb(hue, 0.6, 1.0), 1.0);
+    float4 col(flower * hsv2rgb(hue, 0.6, 1.0), 1.0);
+    col = mix(col, float4(0.85, 0.85, 0.0, 1.0), step(length(uv), size * 0.2));
+    return col;
 }
 
 
@@ -103,7 +105,7 @@ fragment float4 InteractionDemo1(float4 pixPos [[position]],
     
     float t2 = 0.2 * sin(5 * atan2(uv.y, uv.x)) + 0.8;
     float star = step(length(uv), t2);
-    float4 yellowy = mix(float4(1.0, 1.0, 1.0, 1.0), float4(1.0, 1.0, 0.0, 1.0), smoothstep(0.6, 0.9, v));
+    float4 yellowy = mix(float4(1.0, 1.0, 1.0, 1.0), float4(1.0, 1.0, 0.0, 1.0), smoothstep(0.5, 0.8, v));
 
     return mix(smallStar, yellowy, star);
     
